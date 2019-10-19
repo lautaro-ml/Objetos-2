@@ -5,7 +5,7 @@ import java.util.Map;
 
 public interface Rankable {
 
-	public Map<Integer, String> calificaciones = new HashMap<Integer, String>() ;
+	public Map<(Usuario, Tring), Integer> calificaciones = new HashMap<(Usuario, String), Integer>() ;
 	
 	public void calificar(Integer nota, String categoria) ;
 	

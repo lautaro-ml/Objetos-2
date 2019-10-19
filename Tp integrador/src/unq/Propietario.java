@@ -7,7 +7,7 @@ public class Propietario extends Usuario {
 
 	
 	public ArrayList<Propiedad> Propiedades = new ArrayList<Propiedad>() ;
-	public Map<String, Integer> calificaciones = new HashMap<String, Integer>() ;
+	public Map<(Usuario, Tring), Integer> calificaciones = new HashMap<(Usuario, Tring), Integer> ;
 
 	public void registrarPropiedad(String tipoDeInmueble, String localizacion, ArrayList<String> serviciosDisponibles,  Integer capacidad) {
 		Propiedad nuevaPropiedad = new Propiedad(tipoDeInmueble, localizacion, serviciosDisponibles, capacidad, this);
@@ -20,13 +20,27 @@ public class Propietario extends Usuario {
 	
 	public Integer promedio() {
 		Integer res = 0;
-		Collection<Integer> c = calificaciones.values();
+		Iterator<Map.Entry<(Usuario, String), Integer>> i = calificaciones.entrySet().iterator() ;
 		
-		for (int i = 0; i < c.size(); i++) {
-			res = res + c.get(i) ;
+		while(i.hasNext()) {
+			Iterator<Map.Entry<(Usuario, String), Integer>> internalI = calificaciones.entrySet().iterator() ;
+			while(internalI.hasNext()) {
+				String categoriaAPromediar ;
+				String siguienteCategoria = internalI.next().getKey().getValue() ;
+				Integer siguienteValor    = internalI.next().getValue() ;
+				if(siguienteCategoria == null ) {
+					String categoriaAPromediar = siguienteCategoria ;
+				} ;
+				else {
+					if(siguienteCategoria == categoriaAPromediar) {
+						res = res + siguienteValor ;
+						i.remove() ;
+					} ;
+				} ;
+				
+			} ;
 		} ;
-		
-		//TODO: Encontrar la sintaxis para pedir un valor a una coleccion segun el indice
+
 		
 		return res ;
 	} ;

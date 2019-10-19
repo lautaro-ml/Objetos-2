@@ -1,7 +1,6 @@
 package unq;
 
-import java.util.Iterator;
-import java.util.Map;
+import java.util.* ;
 
 public abstract class Usuario {
 
@@ -26,15 +25,15 @@ public abstract class Usuario {
 		this.mail = mail;
 	} ;
 	
-	public Map<(Usuario, Tring), Integer> calificaciones = new HashMap<(Usuario, Tring), Integer> ;
+	public Map<Pair(Usuario, String), Integer> calificaciones = new HashMap<Pair(Usuario, String), Integer> ;
 
-	public void calificar(Integer nota, Pair<(Usuario, Tring)> categoria) {
+	public void calificar(Integer nota, Pair(Usuario, String) categoria) {
 		calificaciones.put(categoria, nota) ;
 	};
 	
 	public Integer promedioDeUnaCategoria(String categoria) {
 		Integer res = 0 ;
-		Iterator<Map.Entry<(Usuario, String), Integer>> i = calificaciones.entrySet().iterator() ;
+		Iterator<Map.Entry<Pair(Usuario, String), Integer>> i = calificaciones.entrySet().iterator() ;
 		while(i.hasNext()) {
 			if(siguienteCategoria == categoriaAPromediar) {
 				res = res + i.next().getValue() ;
@@ -45,7 +44,7 @@ public abstract class Usuario {
 	
 	public Integer promedioTotal() {
 		Integer res = 0 ;
-		Iterator<Map.Entry<(Usuario, String), Integer>> iter = calificaciones.entrySet().iterator() ;
+		Iterator<Map.Entry<Pair(Usuario, String), Integer>> iter = calificaciones.entrySet().iterator() ;
 		while(iter.hasNext) {
 			List<String> categorias = new List<String> ;
 			categorias.add(iter) ;

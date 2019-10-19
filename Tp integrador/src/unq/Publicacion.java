@@ -2,7 +2,7 @@ package unq;
 
 
 import java.time.*;
-import java.util.ArrayList;
+import java.util.*;
 
 public class Publicacion {
 
@@ -32,8 +32,6 @@ public class Publicacion {
 		for(LocalDate i = inicio; i.isBefore(end) && res ; i = i.plusDays(1)) {
 			res = res && disponibilidad.contains(i) ;
 		};
-		
-		//TODO testear que esto funcione. Testear casos limite: no hay fechas disponibles, inicio y end son la misma fecha
 		
 		return res ;
 	} ;

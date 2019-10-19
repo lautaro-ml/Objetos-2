@@ -1,8 +1,6 @@
 package unq;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.* ;
 
 public class Propiedad {
 
@@ -12,37 +10,36 @@ public class Propiedad {
 	public Integer           capacidad ;
 	public Usuario           propietario ;
 	
-	public Map<(Usuario, Tring), Integer> calificaciones = new HashMap<(Usuario, Tring), Integer> ;
+	public Map<Pair<Usuario, String>, Integer> calificaciones = new HashMap<Pair<Usuario, String>, Integer> ;
 
-	public void calificar(Integer nota, Pair<(Usuario, Tring)> categoria) {
+	public void calificar(Integer nota, Pair<Pair<Usuario, String>> categoria) {
 		calificaciones.put(categoria, nota) ;
 	};
 	
-	public Integer promedio() {
-		Integer res = 0;
-		Iterator<Map.Entry<(Usuario, String), Integer>> i = calificaciones.entrySet().iterator() ;
-		
+	public Integer promedioDeUnaCategoria(String categoria) {
+		Integer res = 0 ;
+		Iterator<Map.Entry<Pair<Usuario, String>, Integer>> i = calificaciones.entrySet().iterator() ;
 		while(i.hasNext()) {
-			Iterator<Map.Entry<(Usuario, String), Integer>> internalI = calificaciones.entrySet().iterator() ;
-			while(internalI.hasNext()) {
-				String categoriaAPromediar ;
-				String siguienteCategoria = internalI.next().getKey().getValue() ;
-				Integer siguienteValor    = internalI.next().getValue() ;
-				if(siguienteCategoria == null ) {
-					String categoriaAPromediar = siguienteCategoria ;
-				} ;
-				else {
-					if(siguienteCategoria == categoriaAPromediar) {
-						res = res + siguienteValor ;
-						i.remove() ;
-					} ;
-				} ;
+			if(siguienteCategoria == categoriaAPromediar) {
+				res = res + i.next().getValue() ;
 			} ;
 		} ;
-
-		
 		return res ;
 	} ;	
+	
+	public Integer promedioTotal() {
+		Integer res = 0 ;
+		Iterator<Map.Entry<Pair<Usuario, String>, Integer>> iter = calificaciones.entrySet().iterator() ;
+		while(iter.hasNext) {
+			List<String> categorias = new List<String> ;
+			categorias.add(iter) ;
+		} ;
+		for (int i = 0 ; i < categorias.size() ; i++) {
+			res = res + promedioDeUnaCategoria(categorias.get(i)) ;
+		} ;
+		res = res/categorias.size() ;
+		return res
+	} ;
 	
 	public Propiedad(String tipoDeInmueble, String localisacion, ArrayList<String> serviciosDisponibles,  Integer capasidad, Usuario usuario) {
 		super();

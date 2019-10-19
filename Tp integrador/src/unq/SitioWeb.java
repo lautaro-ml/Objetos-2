@@ -25,4 +25,6 @@ public class SitioWeb {
 		return res ;
 	} ;
 	
+	public hacerReserva() {} ;
+	
 }

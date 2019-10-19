@@ -1,6 +1,8 @@
 package unq;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Map;
 
 public class Propiedad {
 
@@ -10,6 +12,37 @@ public class Propiedad {
 	public Integer           capacidad ;
 	public Usuario           propietario ;
 	
+	public Map<(Usuario, Tring), Integer> calificaciones = new HashMap<(Usuario, Tring), Integer> ;
+
+	public void calificar(Integer nota, Pair<(Usuario, Tring)> categoria) {
+		calificaciones.put(categoria, nota) ;
+	};
+	
+	public Integer promedio() {
+		Integer res = 0;
+		Iterator<Map.Entry<(Usuario, String), Integer>> i = calificaciones.entrySet().iterator() ;
+		
+		while(i.hasNext()) {
+			Iterator<Map.Entry<(Usuario, String), Integer>> internalI = calificaciones.entrySet().iterator() ;
+			while(internalI.hasNext()) {
+				String categoriaAPromediar ;
+				String siguienteCategoria = internalI.next().getKey().getValue() ;
+				Integer siguienteValor    = internalI.next().getValue() ;
+				if(siguienteCategoria == null ) {
+					String categoriaAPromediar = siguienteCategoria ;
+				} ;
+				else {
+					if(siguienteCategoria == categoriaAPromediar) {
+						res = res + siguienteValor ;
+						i.remove() ;
+					} ;
+				} ;
+			} ;
+		} ;
+
+		
+		return res ;
+	} ;	
 	
 	public Propiedad(String tipoDeInmueble, String localisacion, ArrayList<String> serviciosDisponibles,  Integer capasidad, Usuario usuario) {
 		super();

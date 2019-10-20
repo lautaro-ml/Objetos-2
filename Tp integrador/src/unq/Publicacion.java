@@ -2,7 +2,7 @@ package unq;
 
 
 import java.time.*;
-import java.util.ArrayList;
+import java.util.*;
 
 public class Publicacion {
 
@@ -77,7 +77,7 @@ public class Publicacion {
 	
 	public Boolean estaDisponibleEntre(LocalDate fechaAComparar, LocalDate inicio, LocalDate fin) {
 		
-		return (fechaAComparar.isBefore(inicio) || fechaAComparar.isAfter(fin));
+		return (fechaAComparar.isAfter(inicio) || fechaAComparar.isBefore(fin));
 	}
 	
 	public Boolean estaDisponibleEntre_casoBorde_(LocalDate fecha, LocalDate inicio, LocalDate fin){
@@ -86,14 +86,20 @@ public class Publicacion {
 	
 	public Boolean estaDisponibleEntreLasFechas(LocalDate inicio, LocalDate fin) {
 
+		List<LocalDate> rangoDeFechasPedidas     = new ArrayList<LocalDate>();
+		List<LocalDate> rangoDeFechasDisponibles = new ArrayList<LocalDate>();
 		
-		Boolean estaDisponible = true;	
+		for(LocalDate i = inicio; i.isBefore(fin) || i.equals(fin); i = i.plusDays(1)) {
+			rangoDeFechasPedidas.add(i) ;
+		} ;
 		
 		for(LocalDate fecha : disponibilidad) {
-			estaDisponible = (this.estaDisponibleEntre(fecha, inicio, fin) || this.estaDisponibleEntre_casoBorde_(fecha, inicio, fin)) && estaDisponible;
-		}
+			if(this.estaDisponibleEntre(fecha, inicio, fin) || this.estaDisponibleEntre_casoBorde_(fecha, inicio, fin)) {
+				rangoDeFechasDisponibles.add(fecha) ;
+			};
+		} ;
 		
-		return estaDisponible ;
+		return rangoDeFechasPedidas == rangoDeFechasDisponibles ;
 	}
 	
 	public Boolean estaDisponible(LocalDate inicio, LocalDate fin, String localidad) {

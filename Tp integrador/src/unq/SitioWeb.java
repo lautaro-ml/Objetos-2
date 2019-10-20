@@ -6,11 +6,11 @@ import java.util.stream.Collectors;
 
 public class SitioWeb {
 
-	private ArrayList<Publicacion> publicaciones = new ArrayList<Publicacion>();
-	private ArrayList<Reserva> pendientesDeAprobacion = new ArrayList<Reserva>();
-	private ArrayList<Reserva> reservasAprobadas = new ArrayList<Reserva>();
+	private List<Publicacion> publicaciones = new ArrayList<Publicacion>();
+	private List<Reserva> pendientesDeAprobacion = new ArrayList<Reserva>();
+	private List<Reserva> reservasAprobadas = new ArrayList<Reserva>();
 
-	public ArrayList<Publicacion> getListaDePublicaciones() {
+	public List<Publicacion> getListaDePublicaciones() {
 		return this.publicaciones;
 	}
 	
@@ -25,7 +25,7 @@ public class SitioWeb {
 	
 	public List<Publicacion> listarDisponibles(LocalDate inicio, LocalDate fin, String localidad) {
 
-	List<Publicacion> res = this.getListaDePublicaciones();
+	List<Publicacion> res = new ArrayList<Publicacion>() ;
 	for(int i = 0 ; i < this.getListaDePublicaciones().size() ; i++) {
 			if (this.getListaDePublicaciones().get(i).estaDisponible(inicio, fin, localidad)) {
 				res.add(this.getListaDePublicaciones().get(i)) ;

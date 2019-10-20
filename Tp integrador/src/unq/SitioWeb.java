@@ -2,39 +2,54 @@ package unq;
 
 import java.time.*;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class SitioWeb {
 
-	public List<Publicacion> publicaciones = new ArrayList<Publicacion>() ;
-	public List<Reserva> pendientesDeAprobacion = new List<Reserva> ;
-	public List<Reserva> reservasAprobadas = new List<Reserva> ;
-	
-	
-	public void agregarPublicacion(ArrayList<LocalDate> diasDisponibles, LocalTime horarioCheckIn, LocalTime horarioCheckOut, float presio, Propiedad propiedad) {
-		Publicacion nuevaPublicacion = new Publicacion(diasDisponibles, horarioCheckIn, horarioCheckOut, presio, propiedad) ;
-		publicaciones.add(nuevaPublicacion) ;
-	} ;
-	
-	public List<Publicacion> listarDisponibles(LocalDate inicio, LocalDate end, String localidad) {
+	private ArrayList<Publicacion> publicaciones = new ArrayList<Publicacion>();
+	private ArrayList<Reserva> pendientesDeAprobacion = new ArrayList<Reserva>();
+	private ArrayList<Reserva> reservasAprobadas = new ArrayList<Reserva>();
 
-		List<Publicacion> res = new ArrayList<Publicacion>() ;
+	public ArrayList<Publicacion> getListaDePublicaciones() {
+		return this.publicaciones;
+	}
+	
+	public void agregarPublicacionALaLista(Publicacion publicacion) {
+		this.getListaDePublicaciones().add(publicacion);
+	}
+	
+	public void agregarPublicacion(ArrayList<LocalDate> diasDisponibles, LocalTime horarioCheckIn, LocalTime horarioCheckOut, Integer precio, Propiedad propiedad) {
+		Publicacion nuevaPublicacion = new Publicacion(diasDisponibles, horarioCheckIn, horarioCheckOut, precio, propiedad) ;
+		this.agregarPublicacionALaLista(nuevaPublicacion) ;
+	}
+	
+	public List<Publicacion> listarDisponibles(LocalDate inicio, LocalDate fin, String localidad) {
+
+		List<Publicacion> res = this.getListaDePublicaciones();/*.stream().filter(x -> x.perteneceALaLocalidad(localidad))
+					.collect(Collectors.toList());
+		res = res.stream().filter(publicacion -> publicacion.perteneceALaLocalidad(localidad))
+		.collect(Collectors.toList());
+		for(Publicacion publicacion : this.getListaDePublicaciones()) {
+			res = (this.estaDisponibleEntre(fecha, inicio, fin) || this.estaDisponibleEntre_casoBorde_(fecha, inicio, fin)) && estaDisponible;
+		}*/
 		
-		for(int i = 0 ; i < publicaciones.size() ; i++) {
-			if (publicaciones.get(i).estaDisponible(inicio, end, localidad)) {
-				res.add(publicaciones.get(i)) ;
+	/*	for(int i = 0 ; i < this.getListaDePublicaciones().size() ; i++) {
+			if (this.getListaDePublicaciones().get(i).estaDisponible(inicio, fin, localidad)) {
+				res.add(this.getListaDePublicaciones().get(i)) ;
 			} ;
-		} ;
+		}*/
+		return res;
+	}
+	
+	public void hacerReserva(Inquilino inquilino, Propietario propietario, Publicacion publicacion, LocalDate fechaDeEntrada) {
+		Reserva nuevaReserva = new Reserva(inquilino, propietario, publicacion, fechaDeEntrada);
 		
-		return res ;
-	} ;
+		pendientesDeAprobacion.add(nuevaReserva);
+	}
 	
-	public hacerReserva(Inquilino inquilino, Propietario propietario, Publicacion publicacion, LocalDate fechaDeEntrada) {
-		Reserva nuevaReserva = new Reserva(inquilino, propietario, publicacion, fechaDeEntrada) ;
-		pendientesDeAprobacion.add(nuevaReserva) ;
-	} ;
-	
-	public aprobarReserva(Reserva reserva) {
-		pendientesDeAprovacion.remove(reserva) ;
+	public void aprobarReserva(Reserva reserva) {
+		pendientesDeAprobacion.remove(reserva) ;
 		reservasAprobadas.add(reserva) ;
-	} ;
+	}
+	
 }

@@ -1,53 +1,26 @@
 package unq;
 
-import java.util.* ;
+import java.util.ArrayList;
 
 public class Propiedad {
 
-	public String            tipo ;
-	public String            localizacion ;
-	public ArrayList<String> servicios ;
-	public Integer           capacidad ;
-	public Usuario           propietario ;
-	
-	public Map<Pair<Usuario, String>, Integer> calificaciones = new HashMap<Pair<Usuario, String>, Integer> ;
+	private String            tipo ;
+	private String            localizacion ;
+	private ArrayList<String> servicios ;
+	private Integer           capacidad ;
+	private Usuario           propietario ;
 
-	public void calificar(Integer nota, Pair<Pair<Usuario, String>> categoria) {
-		calificaciones.put(categoria, nota) ;
-	};
-	
-	public Integer promedioDeUnaCategoria(String categoria) {
-		Integer res = 0 ;
-		Iterator<Map.Entry<Pair<Usuario, String>, Integer>> i = calificaciones.entrySet().iterator() ;
-		while(i.hasNext()) {
-			if(siguienteCategoria == categoriaAPromediar) {
-				res = res + i.next().getValue() ;
-			} ;
-		} ;
-		return res ;
-	} ;	
-	
-	public Integer promedioTotal() {
-		Integer res = 0 ;
-		Iterator<Map.Entry<Pair<Usuario, String>, Integer>> iter = calificaciones.entrySet().iterator() ;
-		while(iter.hasNext) {
-			List<String> categorias = new List<String> ;
-			categorias.add(iter) ;
-		} ;
-		for (int i = 0 ; i < categorias.size() ; i++) {
-			res = res + promedioDeUnaCategoria(categorias.get(i)) ;
-		} ;
-		res = res/categorias.size() ;
-		return res
-	} ;
-	
-	public Propiedad(String tipoDeInmueble, String localisacion, ArrayList<String> serviciosDisponibles,  Integer capasidad, Usuario usuario) {
+	public Propiedad() {
 		super();
-		tipo          = tipoDeInmueble;
-		localizacion  = localisacion;
-		servicios     = serviciosDisponibles ;
-		capacidad     = capasidad ;
-		propietario   = usuario ;
+	}
+	
+	public Propiedad(String tipoDeInmueble, String localizacion, ArrayList<String> serviciosDisponibles,  Integer capasidad, Usuario usuario) {
+		super();
+		this.setTipo(tipoDeInmueble);
+		this.setLocalizacion(localizacion);
+		this.setServicios(serviciosDisponibles);
+		this.setCapacidad(capasidad);
+		this.setPropietario(usuario);
 	}
 
 

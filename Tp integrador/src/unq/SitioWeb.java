@@ -26,17 +26,11 @@ public class SitioWeb {
 	public List<Publicacion> listarDisponibles(LocalDate inicio, LocalDate fin, String localidad) {
 
 	List<Publicacion> res = this.getListaDePublicaciones();
-	/*.stream().filter(x -> x.perteneceALaLocalidad(localidad)).collect(Collectors.toList());
-		res = res.stream().filter(publicacion -> publicacion.perteneceALaLocalidad(localidad)).collect(Collectors.toList());
-		for(Publicacion publicacion : this.getListaDePublicaciones()) {
-			res = (this.estaDisponibleEntre(fecha, inicio, fin) || this.estaDisponibleEntre_casoBorde_(fecha, inicio, fin)) && estaDisponible;
-		}*/
-		
-	/*	for(int i = 0 ; i < this.getListaDePublicaciones().size() ; i++) {
+	for(int i = 0 ; i < this.getListaDePublicaciones().size() ; i++) {
 			if (this.getListaDePublicaciones().get(i).estaDisponible(inicio, fin, localidad)) {
 				res.add(this.getListaDePublicaciones().get(i)) ;
 			} ;
-		}*/
+		};
 		return res;
 	}
 	

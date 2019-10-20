@@ -13,9 +13,9 @@ public class Inquilino extends Usuario {
 		List<Reserva> res = new ArrayList<Reserva>();
 
 		for (int i = 0 ; i < reservas.size() ; i++) {
-		//	if (reservas.get(i).getPublicacion().getPropiedad().getLocalizacion() == localidad) {
-		//		res.add(reservas.get(i)) ;
-		//	} ;
+			if (reservas.get(i).getPublicacion().getPropiedad().getLocalizacion() == localidad) {
+				res.add(reservas.get(i)) ;
+			} ;
 		} ;
 
 		return res ;
@@ -40,7 +40,7 @@ public class Inquilino extends Usuario {
 		List<String> res = new ArrayList<String>();
 
 		for(int i = 0; i < reservas.size(); i++) {
-		//	res.add(reservas.get(i).getPublicacion().getPropiedad().getLocalizacion());
+			res.add(reservas.get(i).getPublicacion().getPropiedad().getLocalizacion());
 		}
 
 		return res;

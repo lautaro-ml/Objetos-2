@@ -12,6 +12,12 @@ public class Publicacion {
 	private Integer				 precio ;
 	private Propiedad			 propiedad ;
 	
+	public void sacarDeDisponibleDiasReservados(LocalDate inicio, LocalDate fin) {
+		for(LocalDate i = inicio; i.isBefore(fin) || i.equals(fin); i = i.plusDays(1)) {
+			disponibilidad.remove(i) ;
+		};
+	} ;
+	
 	public ArrayList<LocalDate> getDisponibilidad() {
 		return disponibilidad;
 	}

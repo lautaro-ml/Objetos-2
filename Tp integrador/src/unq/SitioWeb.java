@@ -25,10 +25,9 @@ public class SitioWeb {
 	
 	public List<Publicacion> listarDisponibles(LocalDate inicio, LocalDate fin, String localidad) {
 
-		List<Publicacion> res = this.getListaDePublicaciones();/*.stream().filter(x -> x.perteneceALaLocalidad(localidad))
-					.collect(Collectors.toList());
-		res = res.stream().filter(publicacion -> publicacion.perteneceALaLocalidad(localidad))
-		.collect(Collectors.toList());
+	List<Publicacion> res = this.getListaDePublicaciones();
+	/*.stream().filter(x -> x.perteneceALaLocalidad(localidad)).collect(Collectors.toList());
+		res = res.stream().filter(publicacion -> publicacion.perteneceALaLocalidad(localidad)).collect(Collectors.toList());
 		for(Publicacion publicacion : this.getListaDePublicaciones()) {
 			res = (this.estaDisponibleEntre(fecha, inicio, fin) || this.estaDisponibleEntre_casoBorde_(fecha, inicio, fin)) && estaDisponible;
 		}*/
@@ -41,8 +40,8 @@ public class SitioWeb {
 		return res;
 	}
 	
-	public void hacerReserva(Inquilino inquilino, Propietario propietario, Publicacion publicacion, LocalDate fechaDeEntrada) {
-		Reserva nuevaReserva = new Reserva(inquilino, propietario, publicacion, fechaDeEntrada);
+	public void hacerReserva(Inquilino inquilino, Propietario propietario, Publicacion publicacion, LocalDate fechaDeEntrada, LocalDate fechaDeSalida) {
+		Reserva nuevaReserva = new Reserva(inquilino, propietario, publicacion, fechaDeEntrada, fechaDeSalida);
 		
 		pendientesDeAprobacion.add(nuevaReserva);
 	}
@@ -50,6 +49,7 @@ public class SitioWeb {
 	public void aprobarReserva(Reserva reserva) {
 		pendientesDeAprobacion.remove(reserva) ;
 		reservasAprobadas.add(reserva) ;
+		reserva.getPublicacion().sacarDeDisponibleDiasReservados(reserva.getFechaDeEntrada(), reserva.getFechaDeSalida()) ;
 	}
 	
 }

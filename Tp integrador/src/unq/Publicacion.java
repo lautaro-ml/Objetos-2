@@ -2,7 +2,8 @@ package unq;
 
 
 import java.time.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Publicacion {
 
@@ -11,12 +12,6 @@ public class Publicacion {
 	private LocalTime			 checkOut ;
 	private Integer				 precio ;
 	private Propiedad			 propiedad ;
-	
-	public void sacarDeDisponibleDiasReservados(LocalDate inicio, LocalDate fin) {
-		for(LocalDate i = inicio; i.isBefore(fin) || i.equals(fin); i = i.plusDays(1)) {
-			disponibilidad.remove(i) ;
-		};
-	} ;
 	
 	public ArrayList<LocalDate> getDisponibilidad() {
 		return disponibilidad;
@@ -75,35 +70,31 @@ public class Publicacion {
 	 return (this.getPropiedad().getLocalizacion() == localidad);
 	}
 	
-	public Boolean estaDisponibleEntre(LocalDate fechaAComparar, LocalDate inicio, LocalDate fin) {
+	/*public Boolean estaDisponibleEntre(LocalDate fechaAComparar, LocalDate inicio, LocalDate fin) {
 		
-		return (fechaAComparar.isAfter(inicio) || fechaAComparar.isBefore(fin));
-	}
-	
-	public Boolean estaDisponibleEntre_casoBorde_(LocalDate fecha, LocalDate inicio, LocalDate fin){
-		return (fecha.isEqual(inicio) || fecha.isEqual(fin));
-	}
+		return (fechaAComparar.isBefore(fin) && fechaAComparar.isAfter(inicio)) ||
+			   fechaAComparar.isEqual(inicio) || fechaAComparar.isEqual(fin);
+	}*/
 	
 	public Boolean estaDisponibleEntreLasFechas(LocalDate inicio, LocalDate fin) {
 
-		List<LocalDate> rangoDeFechasPedidas     = new ArrayList<LocalDate>();
-		List<LocalDate> rangoDeFechasDisponibles = new ArrayList<LocalDate>();
+		List<LocalDate> rangoDeFechasPedidas = new ArrayList<LocalDate>();
 		
-		for(LocalDate i = inicio; i.isBefore(fin) || i.equals(fin); i = i.plusDays(1)) {
-			rangoDeFechasPedidas.add(i) ;
+		for(LocalDate indice = inicio; indice.isBefore(fin) || indice.equals(fin); indice = indice.plusDays(1)) {
+			rangoDeFechasPedidas.add(indice);
 		} ;
 		
-		for(LocalDate fecha : disponibilidad) {
-			if(this.estaDisponibleEntre(fecha, inicio, fin) || this.estaDisponibleEntre_casoBorde_(fecha, inicio, fin)) {
-				rangoDeFechasDisponibles.add(fecha) ;
-			};
-		} ;
-		
-		return rangoDeFechasPedidas == rangoDeFechasDisponibles ;
+		return disponibilidad.containsAll(rangoDeFechasPedidas);
 	}
 	
 	public Boolean estaDisponible(LocalDate inicio, LocalDate fin, String localidad) {
 		return this.perteneceALaLocalidad(localidad) && this.estaDisponibleEntreLasFechas(inicio, fin);
+	}
+	
+	public void sacarDeDisponibleDiasReservados(LocalDate inicio, LocalDate fin) {
+		for(LocalDate i = inicio; i.isBefore(fin) || i.equals(fin); i = i.plusDays(1)) {
+			disponibilidad.remove(i) ;
+		};
 	}
 
 }

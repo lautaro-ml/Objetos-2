@@ -14,12 +14,12 @@ public class Inquilino extends Usuario {
 
 		for (int i = 0 ; i < reservas.size() ; i++) {
 			if (reservas.get(i).getPublicacion().getPropiedad().getLocalizacion() == localidad) {
-				res.add(reservas.get(i)) ;
-			} ;
-		} ;
+				res.add(reservas.get(i));
+			}
+		}
 
 		return res ;
-	} ;
+	}
 
 
 	public List<Reserva> reservasFuturas() {
@@ -30,11 +30,11 @@ public class Inquilino extends Usuario {
 		for (int i = 0 ; i < reservas.size() ; i++) {
 			if (reservas.get(i).getFechaDeEntrada().isAfter(diaActual)) {
 				res.add(reservas.get(i)) ;
-			} ;
-		} ;
+			}
+		}
 
 		return res ;
-	} ;
+	}
 
 	public List<String> ciudadesConReserva() {
 		List<String> res = new ArrayList<String>();
@@ -54,6 +54,12 @@ public class Inquilino extends Usuario {
 
 	public void setReservas(List<Reserva> reservas) {
 		this.reservas = reservas;
-	} ;
+	}
+
+
+	public void agregarReserva(Reserva reserva) {
+		// TODO Auto-generated method stub
+		this.getReservas().add(reserva);
+	}
 
 }

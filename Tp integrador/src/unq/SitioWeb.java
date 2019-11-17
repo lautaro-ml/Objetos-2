@@ -2,13 +2,11 @@ package unq;
 
 import java.time.*;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class SitioWeb {
 
 	private List<Publicacion> publicaciones = new ArrayList<Publicacion>();
-	private List<Reserva> pendientesDeAprobacion = new ArrayList<Reserva>();
-	private List<Reserva> reservasAprobadas = new ArrayList<Reserva>();
+	private AdministracionDeReserva administradorDeReserva = new AdministracionDeReserva() ;
 
 	public List<Publicacion> getListaDePublicaciones() {
 		return this.publicaciones;
@@ -25,25 +23,37 @@ public class SitioWeb {
 	
 	public List<Publicacion> listarDisponibles(LocalDate inicio, LocalDate fin, String localidad) {
 
-	List<Publicacion> res = new ArrayList<Publicacion>() ;
-	for(int i = 0 ; i < this.getListaDePublicaciones().size() ; i++) {
+		List<Publicacion> res = new ArrayList<Publicacion>();
+		for(Integer i = 0 ; i < this.getListaDePublicaciones().size() ; i++) {
 			if (this.getListaDePublicaciones().get(i).estaDisponible(inicio, fin, localidad)) {
 				res.add(this.getListaDePublicaciones().get(i)) ;
-			} ;
+			};
 		};
 		return res;
 	}
 	
-	public void hacerReserva(Inquilino inquilino, Propietario propietario, Publicacion publicacion, LocalDate fechaDeEntrada, LocalDate fechaDeSalida) {
-		Reserva nuevaReserva = new Reserva(inquilino, propietario, publicacion, fechaDeEntrada, fechaDeSalida);
-		
-		pendientesDeAprobacion.add(nuevaReserva);
+	public List<Publicacion> getPublicaciones() {
+		return publicaciones;
 	}
-	
-	public void aprobarReserva(Reserva reserva) {
-		pendientesDeAprobacion.remove(reserva) ;
-		reservasAprobadas.add(reserva) ;
-		reserva.getPublicacion().sacarDeDisponibleDiasReservados(reserva.getFechaDeEntrada(), reserva.getFechaDeSalida()) ;
+
+	public List<Reserva> getPendientesDeAprobacion() {
+		return administradorDeReserva.getPendientesDeAprobacion();
+	}
+
+	public List<Reserva> getReservasAprobadas() {
+		return administradorDeReserva.getReservasAprobadas();
+	}
+
+	public void setPublicaciones(ArrayList<Publicacion> publicaciones) {
+		this.publicaciones = publicaciones;
+	}
+
+	public AdministracionDeReserva getAdministradorDeReserva() {
+		return administradorDeReserva;
+	}
+
+	public void setAdministradorDeReserva(AdministracionDeReserva administradorDeReserva) {
+		this.administradorDeReserva = administradorDeReserva;
 	}
 	
 }
